@@ -67,6 +67,11 @@ namespace OOPFullTask05
 
         public Shipment(string trackingCode) : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Cairo", "Main St.", 1)) { }
 
+        static Shipment()
+        {
+            Console.WriteLine("Shipment System Initialized");
+        }
+
         public decimal EstimatedCost
         {
             get { return DeliveryFee + (Weight * 5); }
