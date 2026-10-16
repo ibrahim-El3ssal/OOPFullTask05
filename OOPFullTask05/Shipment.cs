@@ -72,10 +72,17 @@ namespace OOPFullTask05
             Console.WriteLine("Shipment System Initialized");
         }
 
+        public static int GetTotalShipmentsCreated()
+        {
+            return TotalShipmentsCreated;
+        }
+
         public decimal EstimatedCost
         {
             get { return DeliveryFee + (Weight * 5); }
         }
+
+   
 
 
         public void UpdateDeliveryFee(decimal newFee)
