@@ -69,6 +69,7 @@ namespace OOPFullTask05
         {      
               get{ return DeliveryFee + (Weight * 5); }
         }
+      
 
         public void UpdateDeliveryFee(decimal newFee)
         {
