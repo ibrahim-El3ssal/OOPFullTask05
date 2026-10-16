@@ -4,12 +4,13 @@ using System.Text;
 
 namespace OOPFullTask05
 {
-    internal  class Shipment
+    internal class Shipment
     {
         private string _trackingCode;
         private string _description;
         private decimal _weight;
         private decimal _deliveryFee;
+        public static int TotalShipmentsCreated;
         public DeliveryAddress Destination { get; set; }
 
         public string TrackingCode
@@ -61,15 +62,16 @@ namespace OOPFullTask05
             _deliveryFee = deliveryFee > 0 ? deliveryFee : 50.0m;
 
             Destination = destination;
+            TotalShipmentsCreated++;
         }
 
         public Shipment(string trackingCode) : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Cairo", "Main St.", 1)) { }
 
-        public  decimal EstimatedCost
-        {      
-              get{ return DeliveryFee + (Weight * 5); }
+        public decimal EstimatedCost
+        {
+            get { return DeliveryFee + (Weight * 5); }
         }
-      
+
 
         public void UpdateDeliveryFee(decimal newFee)
         {
@@ -93,7 +95,7 @@ namespace OOPFullTask05
                 Weight = baseWeight + extraPackingWeight;
             }
         }
-        public  void PrintShipment()
+        public void PrintShipment()
         {
             Console.WriteLine("Standard Shipment\n");
             Console.WriteLine($"Tracking Code : {TrackingCode}");
@@ -111,7 +113,7 @@ namespace OOPFullTask05
                 this.Description,
                 this.Weight,
                 this.DeliveryFee,
-                new DeliveryAddress(this.Destination.City, this.Destination.Street, this.Destination.BuildingNumber) 
+                new DeliveryAddress(this.Destination.City, this.Destination.Street, this.Destination.BuildingNumber)
             );
         }
 
