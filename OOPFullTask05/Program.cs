@@ -59,71 +59,148 @@ namespace OOPFullTask05
             #endregion
 
             #region In Main 
-            ///1  Object Copying
+       
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Smart Delivery Management System");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
+            Console.WriteLine("==========================================\n");
+            Console.WriteLine("Shipment System Initialized");
+            Console.WriteLine("\n==========================================");
+            Console.WriteLine();
+
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Creating Shipments...");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
             DeliveryAddress address1 = new DeliveryAddress("Cairo", "Tahrir St.", 10);
-            Shipment shipment1 = new Shipment("SH-101", "Electronics", 2.5m, 100.0m, address1);
+            Shipment shipment1 = new Shipment("SH001", "Standard", 3.0m, 50.0m, address1, "In Transit");
+            Console.WriteLine("Standard Shipment Created");
 
-            Console.WriteLine("1.Demonstrating Reference Assignment\n");
+            Shipment shipment2 = new Shipment("SH002", "Express", 2.0m, 75.0m, address1, "Out For Delivery");
+            Console.WriteLine("Express Shipment Created");
 
-            Console.WriteLine($" before modifying : {shipment1.Description}");
+            Shipment shipment3 = new Shipment("SH003", "International", 8.0m, 200.0m, address1, "Delivered");
+            Console.WriteLine("International Shipment Created");
+            Console.WriteLine();
 
-            Shipment shipment2 = shipment1;
-
-            shipment2.Description = "Laptops";
-
-            Console.WriteLine($"shipment1 after modifying : {shipment1.Description}");
-            Console.WriteLine($"shipment2 after modifying : {shipment2.Description}");
-
-            //2  Shallow Copy
-            Console.WriteLine("\n2.Demonstrating ShallowCopy()\n");
-
-            Shipment shipment3 = shipment1.ShallowCopy();
-            shipment3.Description = "Smartphones";
-
-            Console.WriteLine($"shipment1 after modifying : {shipment1.Description}");
-            Console.WriteLine($"shipment3 after modifying : {shipment3.Description}");
-
-
-            shipment3.Destination.City = "Alexandria";
-            Console.WriteLine($"\nshipment1 after modifying : {shipment1.Destination.City}");
-            Console.WriteLine($"shipment2 after modifying : {shipment2.Destination.City}");
-            Console.WriteLine($"shipment3 after modifying : {shipment3.Destination.City}");
-
-            //2  Shallow Copy
-            Console.WriteLine("\n2.Demonstrating DeepCopy()\n");
-
-            Shipment shipment4 = shipment1.DeepCopy();
-            shipment4.Destination.City = "Giza";
-            shipment1.Destination.City = "aswan";
-
-            Console.WriteLine($"\nshipment1 before modifying : {shipment1.Destination.City}");
-            Console.WriteLine($"shipment2   before modifying : {shipment2.Destination.City}");
-            Console.WriteLine($"shipment3   before modifying : {shipment3.Destination.City}");
-            Console.WriteLine($"shipment4   before modifying : {shipment4.Destination.City}");
-
-            bool isSameAddressObject = object.ReferenceEquals(shipment1.Destination, shipment4.Destination);
-            Console.WriteLine($"Same Address object?\t{isSameAddressObject}\t\t{isSameAddressObject}");
-
-            
             Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
+            Console.WriteLine();
 
-            /// 7  Static Class
-             DeliveryUtilities.PrintSeparator();
-            DeliveryUtilities.PrintSystemTitle();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Object Copying");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
+            Console.WriteLine($"Original Shipment  : {shipment1.TrackingCode}");
+            Shipment assignedShipment = shipment1;
+            Console.WriteLine($"Assigned Shipment  : {assignedShipment.TrackingCode}");
+            Console.WriteLine();
+
+            bool isSameObject = object.ReferenceEquals(shipment1, assignedShipment);
+            Console.WriteLine($"Same Object : {isSameObject}");
+            Console.WriteLine();
+
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("Shallow Copy");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine();
+
+            Shipment shallowCopyShipment = shipment1.ShallowCopy();
+            Console.WriteLine($"Original Shipment Address : {shipment1.Destination.City}");
+            Console.WriteLine($"Copied Shipment Address   : {shallowCopyShipment.Destination.City}");
+            Console.WriteLine();
+
+            Console.WriteLine("Changing copied shipment address...");
+
+            shallowCopyShipment.Destination.City = "Giza";
+            Console.WriteLine();
+
+            Console.WriteLine($"Original Shipment Address : {shipment1.Destination.City}");
+            Console.WriteLine($"Copied Shipment Address   : {shallowCopyShipment.Destination.City}");
+            Console.WriteLine();
+
+            bool isSameAddressInShallow = object.ReferenceEquals(shipment1.Destination, shallowCopyShipment.Destination);
+            Console.WriteLine($"Same DeliveryAddress Object : {isSameAddressInShallow}");
+            Console.WriteLine();
+
+   
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("Deep Copy");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine();
+
+            shipment1.Destination.City = "Cairo";
+            Shipment deepCopyShipment = shipment1.DeepCopy();
+
+            Console.WriteLine($"Original Shipment Address : {shipment1.Destination.City}");
+            Console.WriteLine($"Copied Shipment Address   : {deepCopyShipment.Destination.City}");
+            Console.WriteLine();
+
+            Console.WriteLine("Changing copied shipment address...");
+            deepCopyShipment.Destination.City = "Giza";
+            Console.WriteLine();
+
+            Console.WriteLine($"Original Shipment Address : {shipment1.Destination.City}");
+            Console.WriteLine($"Copied Shipment Address   : {deepCopyShipment.Destination.City}");
+            Console.WriteLine();
+
+            bool isSameAddressInDeep = object.ReferenceEquals(shipment1.Destination, deepCopyShipment.Destination);
+            Console.WriteLine($"Same DeliveryAddress Object : {isSameAddressInDeep}");
+            Console.WriteLine();
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Extension Methods");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
+            Console.WriteLine($"{shipment1.TrackingCode} | {shipment1.Description} | {shipment1.Weight} KG | {shipment1.GetTrackingStatus()}");
+            Console.WriteLine($"{shipment2.TrackingCode} | {shipment2.Description} | {shipment2.Weight} KG | {shipment2.GetTrackingStatus()}");
+            Console.WriteLine($"{shipment3.TrackingCode} | {shipment3.Description} | {shipment3.Weight} KG | {shipment3.GetTrackingStatus()}");
+            Console.WriteLine();
+
+            Console.WriteLine($"{shipment1.TrackingCode} Is Delivered : {shipment1.IsDelivered()}");
+            Console.WriteLine($"{shipment3.TrackingCode} Is Delivered : {shipment3.IsDelivered()}");
+            Console.WriteLine();
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Tracking Status");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
+            shipment1.UpdateTrackingStatus("Out For Delivery");
+            Console.WriteLine();
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Static Utilities");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
+
             DeliveryUtilities.PrintSeparator();
+            DeliveryUtilities.PrintSystemTitle(); 
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine();
 
-            /// 8  Extension Methods
-            /// 
-            Shipment shipment5 = new Shipment("SH001", "Standard", 3.0m, 50.0m, address1 , "In Transit");
-            Console.WriteLine(shipment5.GetSummary());
+            Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
+            Console.WriteLine();
 
-            bool isDelivered = shipment5.IsDelivered();
-            Console.WriteLine($"Is Delivered? : {isDelivered}");
+          
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Partial Method");
+            Console.WriteLine("==========================================");
+            Console.WriteLine();
 
-            Shipment shipment = new Shipment("SH001", "Standard", 3.0m, 50.0m, address1, "In Transit");
+            shipment1.UpdateTrackingStatus("Delivered");
+            Console.WriteLine();
 
-            shipment.UpdateTrackingStatus("Out For Delivery");
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Assignment Completed");
+            Console.WriteLine("==========================================");
 
+            Console.ReadLine();
             #endregion
 
             Console.ReadLine();
