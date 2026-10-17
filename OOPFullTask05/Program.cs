@@ -104,7 +104,7 @@ namespace OOPFullTask05
             bool isSameAddressObject = object.ReferenceEquals(shipment1.Destination, shipment4.Destination);
             Console.WriteLine($"Same Address object?\t{isSameAddressObject}\t\t{isSameAddressObject}");
 
-            // استدعاء الدالة مباشرة باسم الكلاس بدون إنشاء كائن
+            
             Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
 
             /// 7  Static Class
@@ -120,6 +120,9 @@ namespace OOPFullTask05
             bool isDelivered = shipment5.IsDelivered();
             Console.WriteLine($"Is Delivered? : {isDelivered}");
 
+            Shipment shipment = new Shipment("SH001", "Standard", 3.0m, 50.0m, address1, "In Transit");
+
+            shipment.UpdateTrackingStatus("Out For Delivery");
 
             #endregion
 

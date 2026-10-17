@@ -8,6 +8,9 @@ namespace OOPFullTask05
     {
         private string _trackingStatus;
 
+        // 1. الإعلان عن الـ Partial Method (Declaration)
+        partial void OnTrackingStatusChanged(string newStatus);
+
         public string TrackingStatus
         {
             get { return _trackingStatus; }
@@ -20,20 +23,22 @@ namespace OOPFullTask05
             }
         }
 
-        // GetTrackingStatus Method
         public string GetTrackingStatus()
         {
             return TrackingStatus;
         }
 
-        // UpdateTrackingStatus Method
+        // 2. الاستدعاء من UpdateTrackingStatus()
         public void UpdateTrackingStatus(string newStatus)
         {
             if (!string.IsNullOrWhiteSpace(newStatus))
             {
+                // استدعاء الدالة الجزئية (التي تم تنفيذها في Shipment.cs)
+                OnTrackingStatusChanged(newStatus);
+
                 TrackingStatus = newStatus;
-                Console.WriteLine($"Tracking status updated to: {TrackingStatus}");
             }
         }
     }
 }
+

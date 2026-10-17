@@ -159,5 +159,11 @@ namespace OOPFullTask05
                 this.TrackingStatus
             );
         }
-    }
+
+        partial void OnTrackingStatusChanged(string newStatus)
+        {
+            Console.WriteLine($"Tracking status changed to: {newStatus}");
+        }
+
+        }
 }
