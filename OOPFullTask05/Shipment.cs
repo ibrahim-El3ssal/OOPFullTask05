@@ -11,7 +11,20 @@ namespace OOPFullTask05
         private decimal _weight;
         private decimal _deliveryFee;
         public static int TotalShipmentsCreated;
+        private string _trackingStatus;
         public DeliveryAddress Destination { get; set; }
+
+        public string TrackingStatus
+        {
+            get { return _trackingStatus; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _trackingStatus = value;
+                }
+            }
+        }
 
         public string TrackingCode
         {
@@ -54,7 +67,8 @@ namespace OOPFullTask05
             }
         }
 
-        public Shipment(string trackingCode, string description, decimal weight, decimal deliveryFee, DeliveryAddress destination)
+        // 1. Constructor الأساسي بـ 6 بارامترات
+        public Shipment(string trackingCode, string description, decimal weight, decimal deliveryFee, DeliveryAddress destination, string trackingStatus)
         {
             _trackingCode = !string.IsNullOrWhiteSpace(trackingCode) ? trackingCode : "UNKNOWN";
             _description = !string.IsNullOrWhiteSpace(description) ? description : "Unknown";
@@ -62,10 +76,18 @@ namespace OOPFullTask05
             _deliveryFee = deliveryFee > 0 ? deliveryFee : 50.0m;
 
             Destination = destination;
+            _trackingStatus = !string.IsNullOrWhiteSpace(trackingStatus) ? trackingStatus : "In Transit";
             TotalShipmentsCreated++;
         }
 
-        public Shipment(string trackingCode) : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Cairo", "Main St.", 1)) { }
+        // 2. Constructor بـ 5 بارامترات (مخصص لدالتي Copy و DeepCopy لتمرير الحالة افتراضياً)
+        public Shipment(string trackingCode, string description, decimal weight, decimal deliveryFee, DeliveryAddress destination)
+            : this(trackingCode, description, weight, deliveryFee, destination, "In Transit")
+        {
+        }
+
+        // 3. Constructor فرعي (بكود التتبع فقط)
+        public Shipment(string trackingCode) : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Cairo", "Main St.", 1), "In Transit") { }
 
         static Shipment()
         {
@@ -82,9 +104,6 @@ namespace OOPFullTask05
             get { return DeliveryFee + (Weight * 5); }
         }
 
-   
-
-
         public void UpdateDeliveryFee(decimal newFee)
         {
             if (newFee > 0)
@@ -100,6 +119,7 @@ namespace OOPFullTask05
                 Weight = newWeight;
             }
         }
+
         public void UpdateWeight(decimal baseWeight, decimal extraPackingWeight)
         {
             if (baseWeight > 0 && extraPackingWeight >= 0)
@@ -107,6 +127,7 @@ namespace OOPFullTask05
                 Weight = baseWeight + extraPackingWeight;
             }
         }
+
         public void PrintShipment()
         {
             Console.WriteLine("Standard Shipment\n");
@@ -125,7 +146,8 @@ namespace OOPFullTask05
                 this.Description,
                 this.Weight,
                 this.DeliveryFee,
-                new DeliveryAddress(this.Destination.City, this.Destination.Street, this.Destination.BuildingNumber)
+                new DeliveryAddress(this.Destination.City, this.Destination.Street, this.Destination.BuildingNumber),
+                this.TrackingStatus
             );
         }
 
@@ -137,19 +159,18 @@ namespace OOPFullTask05
         public Shipment DeepCopy()
         {
             DeliveryAddress newAddress = new DeliveryAddress(
-            this.Destination.City,
-            this.Destination.Street,
-            this.Destination.BuildingNumber
-                );
+                this.Destination.City,
+                this.Destination.Street,
+                this.Destination.BuildingNumber
+            );
             return new Shipment(
                 this.TrackingCode,
                 this.Description,
                 this.Weight,
                 this.DeliveryFee,
-                newAddress
+                newAddress,
+                this.TrackingStatus
             );
         }
     }
-
-
 }
